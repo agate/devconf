@@ -1,0 +1,17 @@
+[user]                                                                          
+  name = agate
+  email = agate.hao@gmail.com
+[color]
+  status = auto
+  branch = auto
+  diff = auto
+  interactive = auto
+[merge]
+  tool = vimdiff
+[core]
+  editor = vim
+[alias]
+  st = status
+  ci = commit -a
+  co = checkout
+  cl = clone
