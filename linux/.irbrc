@@ -62,3 +62,16 @@ rescue LoadError => e
     end
   end
 end
+
+# --------------------------------
+# use hirb
+# --------------------------------
+begin
+  require 'hirb'
+  extend Hirb::Console
+  Hirb::View.enable
+  Hirb::View.formatter_config
+  puts 'use hirb'
+rescue LoadError => e
+  puts 'no hirb'
+end
