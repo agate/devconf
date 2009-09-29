@@ -1,10 +1,10 @@
 # Just put this file in ~/.irbrc and your irb experience will be much better!
-
+ 
 # --------------------------------
 # added default require libs
 # --------------------------------
 require 'rubygems'
-
+ 
 # --------------------------------
 # use wirble
 #   auto-completion
@@ -13,18 +13,18 @@ require 'rubygems'
 # --------------------------------
 begin
   require 'wirble'
-
+ 
   Wirble.init
   Wirble.colorize
   puts 'use wirble'
 rescue LoadError => e
-  puts 'default'
-
+  puts 'no wirble'
+ 
   # --------------------------------
   # Include tab-completion in irb
   # --------------------------------
   require 'irb/completion'
-
+ 
   # --------------------------------
   # Load and save each command in irb
   # so we don't have to re-type stuff
@@ -34,15 +34,15 @@ rescue LoadError => e
   # --------------------------------
   HISTORY_FILE_PATH = "~/.irb_history"
   HISTORY_MAX_SIZE  = 100
-
+ 
   begin
     history_file = File::expand_path(HISTORY_FILE_PATH)
-
+ 
     if File::exists?(history_file)
       histoies = IO::readlines(history_file).collect { |history| history.chomp }
       Readline::HISTORY.push(*histoies)
     end
-
+ 
     Kernel::at_exit do
       histoies = Readline::HISTORY.to_a.reverse.uniq.reverse
       histoies = histoies[-HISTORY_MAX_SIZE, HISTORY_MAX_SIZE] if histoies.nitems > HISTORY_MAX_SIZE
@@ -51,7 +51,7 @@ rescue LoadError => e
       end
     end
   end
-
+ 
   # --------------------------------
   # Enable "ri" command inside irb.
   # Taken from Programming Ruby 2.
@@ -74,4 +74,13 @@ begin
   puts 'use hirb'
 rescue LoadError => e
   puts 'no hirb'
+end
+
+# --------------------------------
+# Log to STDOUT if in Rails
+# --------------------------------
+if ENV.include?('RAILS_ENV') && !Object.const_defined?('RAILS_DEFAULT_LOGGER')
+  require 'logger'
+  RAILS_DEFAULT_LOGGER = Logger.new(STDOUT)
+  puts 'enabled Rails log'
 end
